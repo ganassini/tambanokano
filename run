@@ -1,8 +1,0 @@
-#!/bin/sh
-
-if [ ! -f "target/release/libtambanokano.so" ]; then
-    echo "Rust library not found, building first..."
-    ./build
-fi
-
-love .

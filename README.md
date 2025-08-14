@@ -34,11 +34,13 @@ cargo install --force cbindgen
 Usage
 -----
 
-After installing the dependencies, just run the `build` and `run` scripts
+After installing the dependencies, just run
 
 ```bash
-./build
-./run
+make
+make run
+make build
+make help
 ```
 
 or
@@ -56,8 +58,7 @@ tambanokano/
 ├── src/
 │   └── lib.rs                 # Rust fractal engine
 ├── main.lua                   # LÖVE2D main file
-├── build                      # Build script
-├── run                        # Run script  
+├── Makefile                   # Build and run instructions
 ├── README.md                  # Project documentation
 └── .gitignore                 # Git ignore file
 ```

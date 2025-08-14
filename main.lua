@@ -109,7 +109,7 @@ function love.update(dt)
     end
 
     if GameState.auto_animate then
-        GameState.zoom = GameState.zoom * (1.0 - zoom_speed * 0.5)
+        GameState.zoom = GameState.zoom * (1.0 + zoom_speed * 0.5)
         GameState.needs_regenerate = true
     end
 

@@ -1,11 +1,8 @@
-#!/bin/bash
-
-echo "Starting Tambanokano Fractal Explorer..."
+#!/bin/sh
 
 if [ ! -f "target/release/libtambanokano.so" ]; then
     echo "Rust library not found, building first..."
-    ./build.sh
+    ./build
 fi
 
-echo "Launching LÖVE2D..."
 love .

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "Building Rust library..."
+cargo build --release
+
+if [ $? -eq 0 ]; then
+    echo "Rust library built successfully!"
+    echo "Library location: $(pwd)/target/release/libtambanokano.so"
+    ls -la target/release/libtambanokano.so
+else
+    echo "Rust build failed!"
+    exit 1
+fi

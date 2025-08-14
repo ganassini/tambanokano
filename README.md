@@ -29,6 +29,22 @@ rustup update
 cargo install --force cbindgen
 ```
 
+Usage
+-----
+
+After installing the dependencies, just run the `build` and `run` scripts
+
+```bash
+./build
+./run
+```
+
+or
+
+```bash
+cargo build --release && love .
+```
+
 Repository Structure
 --------------------
 
@@ -38,8 +54,8 @@ tambanokano/
 ├── src/
 │   └── lib.rs                 # Rust fractal engine
 ├── main.lua                   # LÖVE2D main file
-├── build.sh                   # Build script
-├── run.sh                     # Run script  
+├── build                      # Build script
+├── run                        # Run script  
 ├── README.md                  # Project documentation
 └── .gitignore                 # Git ignore file
 ```

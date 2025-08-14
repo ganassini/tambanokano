@@ -104,8 +104,11 @@ function love.update(dt)
         GameState.needs_regenerate = true
     end
     if love.keyboard.isDown("e") then 
-        GameState.zoom = GameState.zoom / (1.0 + zoom_speed)
-        GameState.needs_regenerate = true
+        new_zoom = GameState.zoom / (1.0 + zoom_speed)
+        if new_zoom > 1 then
+          GameState.zoom = new_zoom
+          GameState.needs_regenerate = true
+        end
     end
 
     if GameState.auto_animate then

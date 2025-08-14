@@ -136,7 +136,7 @@ function love.keypressed(key)
         GameState.show_help = not GameState.show_help
     elseif key == "s" then
         local screenshot = love.graphics.captureScreenshot(os.date("fractal-%Y%m%d-%H%M%S.png"))
-        print("💾 Screenshot saved!")
+        print("Screenshot saved!")
     elseif key == "=" or key == "+" then
         GameState.iterations = GameState.iterations + 50
         GameState.needs_regenerate = true

@@ -19,7 +19,9 @@ sudo pacman -S rust love lua
 ### On Ubuntu/Debian
 
 ```bash
-sudo apt install rust love lua 
+sudo apt install rustc cargo
+sudo apt install lua5.4
+sudo apt install love 
 ```
 
 ## Install Rust Dependencies

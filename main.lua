@@ -79,7 +79,7 @@ end
 function love.update(dt)
     GameState.time = GameState.time + dt
     
-    local move_speed = 0.5 / GameState.zoom * dt
+    local move_speed = 1.5 / GameState.zoom * dt
     local zoom_speed = 2.0 * dt
     
     if love.keyboard.isDown("left") then 

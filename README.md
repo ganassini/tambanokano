@@ -6,6 +6,12 @@ Tambanokano is a simple cross-language fractal viewer where a Rust library compu
 
 The name [Tambanokano](https://www.aswangproject.com/tambanokano-tambanakaua/) comes from Mandaya folklore, referring to a giant crab known for swallowing its mother, the moon.
 
+Links
+-----
+
+* [LÖVE2D Website](https://love2d.org/) <br>
+* [FFI Library](https://luajit.org/ext_ffi.html)
+
 Installation
 ------------
 

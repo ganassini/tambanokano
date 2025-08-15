@@ -39,9 +39,14 @@ pub extern "C" fn generate_fractal(
         });
 }
 
-fn calculate_mandelbrot(
-    px: i32, py: i32, width: i32, height: i32,
-    center_x: f64, center_y: f64, zoom: f64, max_iter: i32
+fn calculate_mandelbrot(px: i32,
+                        py: i32,
+                        width: i32,
+                        height: i32,
+                        center_x: f64,
+                        center_y: f64,
+                        zoom: f64,
+                        max_iter: i32
 ) -> Color {
     let scale = 4.0 / zoom;
     let x = (px as f64 - width as f64 / 2.0) * scale / width as f64 + center_x;

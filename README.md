@@ -50,6 +50,12 @@ or
 cargo build --release && love .
 ```
 
+For the case study do:
+
+```bash
+make case-study
+```
+
 Repository Structure
 --------------------
 

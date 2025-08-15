@@ -6,6 +6,19 @@ Tambanokano is a simple cross-language fractal viewer where a Rust library compu
 
 The name [Tambanokano](https://www.aswangproject.com/tambanokano-tambanakaua/) comes from Mandaya folklore, referring to a giant crab known for swallowing its mother, the moon.
 
+Members
+-------
+
+[Guilherme Ganassini](https://github.com/ganassini/) <br>
+[Gustavo Domenech](https://github.com/GustavoDomenech/) <br>
+[Rodrigo Iasculski](https://github.com/Rodrigo-Iasculski/)
+
+Links
+-----
+
+* [LÖVE2D Website](https://love2d.org/) <br>
+* [FFI Library](https://luajit.org/ext_ffi.html)
+
 Installation
 ------------
 
@@ -35,17 +48,25 @@ cargo install --force cbindgen
 Usage
 -----
 
-After installing the dependencies, just run the `build` and `run` scripts
+After installing the dependencies, just run
 
 ```bash
-./build
-./run
+make
+make run
+make build
+make help
 ```
 
 or
 
 ```bash
 cargo build --release && love .
+```
+
+for the case study:
+
+```bash
+make case-study
 ```
 
 Repository Structure
@@ -57,8 +78,7 @@ tambanokano/
 ├── src/
 │   └── lib.rs                 # Rust fractal engine
 ├── main.lua                   # LÖVE2D main file
-├── build                      # Build script
-├── run                        # Run script  
+├── Makefile                   # Build and run instructions
 ├── README.md                  # Project documentation
 └── .gitignore                 # Git ignore file
 ```

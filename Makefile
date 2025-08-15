@@ -15,12 +15,12 @@ $(TARGET):
 	@ls -la $@
 
 run: build
-	@echo "Launching LÖVE2D application..."
+	@echo "launching LÖVE2D application..."
 	love .
 
 case-study: build
-	@echo "Running case study..."
-	love . --case-study
+	@echo "running case study..."
+	love . --case-study --center-x -0.7269 --center-y 0.1889 --zoom 50 --iterations 2000
 
 clean:
 	@cargo clean

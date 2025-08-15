@@ -21,12 +21,98 @@ ffi.cdef[[
                          double center_x, double center_y, double zoom, int iterations);
 ]]
 
+function parseArguments(args)
+    local params = {
+        center_x = -0.5,
+        center_y = 0.0,
+        zoom = 1.0,
+        iterations = 100,
+        case_study = false
+    }
+    
+    local i = 1
+    while i <= #args do
+        local arg = args[i]
+        
+        if arg == "--help" or arg == "-h" then
+            print("\nTambanokano Fractal Viewer")
+            print("usage: love . [options]")
+            print("options:")
+            print("  --center-x <value>     initial center X coordinate (default: -0.5)")
+            print("  --center-y <value>     initial center Y coordinate (default: 0.0)")
+            print("  --zoom <value>         initial zoom level (default: 1.0)")
+            print("  --iterations <value>   initial iteration count (default: 100)")
+            print("  --case-study           run automated case study")
+            print("  --help, -h             show this help message")
+            print("")
+            love.event.quit()
+            return params
+        elseif arg == "--center-x" then
+            if i + 1 <= #args then
+                local value = tonumber(args[i + 1])
+                if value then
+                    params.center_x = value
+                    i = i + 1
+                else
+                    print("invalid value for --center-x, using default")
+                end
+            else
+                print("--center-x requires a value, using default")
+            end
+        elseif arg == "--center-y" then
+            if i + 1 <= #args then
+                local value = tonumber(args[i + 1])
+                if value then
+                    params.center_y = value
+                    i = i + 1
+                else
+                    print("invalid value for --center-y, using default")
+                end
+            else
+                print("--center-y requires a value, using default")
+            end
+        elseif arg == "--zoom" then
+            if i + 1 <= #args then
+                local value = tonumber(args[i + 1])
+                if value and value > 0 then
+                    params.zoom = value
+                    i = i + 1
+                else
+                    print("invalid value for --zoom (must be positive), using default")
+                end
+            else
+                print("--zoom requires a value, using default")
+            end
+        elseif arg == "--iterations" then
+            if i + 1 <= #args then
+                local value = tonumber(args[i + 1])
+                if value and value > 0 and value == math.floor(value) then
+                    params.iterations = value
+                    i = i + 1
+                else
+                    print("invalid value for --iterations (must be positive integer), using default")
+                end
+            else
+                print("--iterations requires a value, using default")
+            end
+        elseif arg == "--case-study" then
+            params.case_study = true
+        end
+        
+        i = i + 1
+    end
+    
+    return params
+end
+
+local initial_params = parseArguments(arg)
+
 local GameState = {
     -- fractal parameters
-    center_x = -0.5,
-    center_y = 0.0,
-    zoom = 1.0,
-    iterations = 100,
+    center_x = initial_params.center_x,
+    center_y = initial_params.center_y,
+    zoom = initial_params.zoom,
+    iterations = initial_params.iterations,
     
     -- rendering
     fractal_texture = nil,
@@ -40,8 +126,8 @@ local GameState = {
 
 -- this is global so we can zoom with the mousewheel
 local dt
--- detect case Study
-local caseStudy = (arg[#arg] == "--case-study")
+-- detect case Study (now using parsed parameter)
+local caseStudy = initial_params.case_study
 local caseTimer = 0
 local screenshotTaken = false
 
@@ -51,16 +137,24 @@ function love.load()
     -- https://love2d.org/wiki/love.graphics.setBackgroundColor
     love.graphics.setBackgroundColor(0.05, 0.05, 0.15)
     
+    print("starting with parameters:")
+    print("  center: (" .. string.format("%.4f", GameState.center_x) .. ", " .. string.format("%.4f", GameState.center_y) .. ")")
+    print("  zoom: " .. string.format("%.2f", GameState.zoom))
+    print("  iterations: " .. GameState.iterations)
+    if caseStudy then
+        print("  Running case study mode")
+    end
+    
     generateFractal()
     
     print("\nControls:")
     print("  arrow keys   - move")
-    print("  q/e              - zoom in/out") 
-    print("  +/-              - more/less iterations")
+    print("  q/e          - zoom in/out") 
+    print("  +/-          - more/less iterations")
     print("  space        - toggle auto-animation")
-    print("  r                - reset to default view")
-    print("  s                - save screenshot")
-    print("  h                - toggle help")
+    print("  r            - reset to initial view")
+    print("  s            - save screenshot")
+    print("  h            - toggle help")
     print("  ESC          - exit")
 end
 
@@ -97,7 +191,7 @@ function love.update(td)
 
     if caseStudy then
       caseTimer = caseTimer + dt
-      if caseTimer <= 0.63 then
+      if caseTimer <= 0.30 then
         GameState.center_x = GameState.center_x - move_speed
         GameState.needs_regenerate = true
       elseif caseTimer <= 0.73 then
@@ -106,14 +200,8 @@ function love.update(td)
       elseif caseTimer <= 3 then
         GameState.zoom = GameState.zoom * (1.0 + zoom_speed)
         GameState.needs_regenerate = true
-      elseif caseTimer <= 4 then
+      elseif caseTimer <= 3.1 then
         GameState.center_y = GameState.center_y + move_speed
-        GameState.needs_regenerate = true
-      elseif caseTimer <= 5.5 then
-        GameState.center_x = GameState.center_x + move_speed
-        GameState.needs_regenerate = true
-      elseif caseTimer <= 6 then
-        GameState.center_y = GameState.center_y - move_speed
         GameState.needs_regenerate = true
       elseif caseTimer <= 7.5 then
         GameState.zoom = GameState.zoom * (1.0 + zoom_speed)
@@ -121,7 +209,7 @@ function love.update(td)
       elseif caseTimer > 7.5 and not screenshotTaken then
         local filename = os.date("fractal-case-%Y%m%d-%H%M%S.png")
         love.graphics.captureScreenshot(function(filename)
-        print("Case study screenshot saved! Closing application in 5 seconds")
+        print("case study screenshot saved! closing application in 5 seconds")
         end)
         screenshotTaken = true
       elseif caseTimer >=13 then
@@ -185,17 +273,17 @@ function love.keypressed(key)
     elseif key == "space" then
         GameState.auto_animate = not GameState.auto_animate
     elseif key == "r" then
-        GameState.center_x = -0.5
-        GameState.center_y = 0.0
-        GameState.zoom = 1.0
-        GameState.iterations = 100
+        GameState.center_x = initial_params.center_x
+        GameState.center_y = initial_params.center_y
+        GameState.zoom = initial_params.zoom
+        GameState.iterations = initial_params.iterations
         GameState.needs_regenerate = true
     elseif key == "h" then
         GameState.show_help = not GameState.show_help
     elseif key == "s" then
         -- https://love2d.org/wiki/love.graphics.captureScreenshot
-        local screenshot = love.graphics.captureScreenshot(os.date("fractal-%Y%m%d-%H%M%S.png"))
-        print("Screenshot saved!")
+        local screenshot = love.graphics.captureScreenshot(os.date("./fractal-%Y%m%d-%H%M%S.png"))
+        print("screenshot saved!")
     elseif key == "=" or key == "+" then
         GameState.iterations = GameState.iterations + 50
         GameState.needs_regenerate = true

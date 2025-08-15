@@ -50,7 +50,7 @@ or
 cargo build --release && love .
 ```
 
-For the case study do:
+For the case study:
 
 ```bash
 make case-study

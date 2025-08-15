@@ -1,5 +1,7 @@
+-- library that import C functions
 local ffi = require("ffi")
 
+-- shared library
 local lib_path = "./target/release/libtambanokano.so"
 local fractal_lib
 
@@ -16,6 +18,7 @@ if not success then
     return
 end
 
+-- expose a C function to the Foreign Function Interface
 ffi.cdef[[
     void generate_fractal(unsigned char* buffer, int width, int height, 
                          double center_x, double center_y, double zoom, int iterations);
@@ -161,7 +164,7 @@ end
 function generateFractal()
     local width, height = 800, 800
     
-    local buffer = ffi.new("unsigned char[?]", width * height * 4)
+    local buffer = ffi.new("unsigned char[?]", width * height * 4) -- 4 -> RGBA
     
     fractal_lib.generate_fractal(
         buffer, width, height,

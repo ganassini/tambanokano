@@ -6,6 +6,13 @@ Tambanokano is a simple cross-language fractal viewer where a Rust library compu
 
 The name [Tambanokano](https://www.aswangproject.com/tambanokano-tambanakaua/) comes from Mandaya folklore, referring to a giant crab known for swallowing its mother, the moon.
 
+Members
+-------
+
+[Guilherme Ganassini](https://github.com/ganassini/) <br>
+[Gustavo Domenech](https://github.com/GustavoDomenech/) <br>
+[Rodrigo Iasculski](https://github.com/Rodrigo-Iasculski/)
+
 Links
 -----
 
@@ -56,7 +63,7 @@ or
 cargo build --release && love .
 ```
 
-For the case study:
+for the case study:
 
 ```bash
 make case-study

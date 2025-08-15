@@ -20,7 +20,7 @@ run: build
 
 case-study: build
 	@echo "running case study..."
-	love . --case-study --center-x -0.7269 --center-y 0.1889 --zoom 50 --iterations 2000
+	love . --case-study --center-x -0.7269 --center-y 0.1889 --zoom 50 --iterations 500
 
 clean:
 	@cargo clean

@@ -38,15 +38,12 @@ local GameState = {
     needs_regenerate = true,
 }
 
-<<<<<<< Updated upstream
---Detect case Study
+-- this is global so we can zoom with the mousewheel
+local dt
+-- detect case Study
 local caseStudy = (arg[#arg] == "--case-study")
 local caseTimer = 0
 local screenshotTaken = false
-=======
--- this is global so we can zoom with the mousewheel
-local dt
->>>>>>> Stashed changes
 
 function love.load()
     -- https://love2d.org/wiki/love.window.setTitle
@@ -97,7 +94,6 @@ function love.update(td)
     
     local move_speed = 1.5 / GameState.zoom * dt
     local zoom_speed = 2.0 * dt
-<<<<<<< Updated upstream
 
     if caseStudy then
       caseTimer = caseTimer + dt
@@ -136,10 +132,8 @@ function love.update(td)
       end
       return
     end
-=======
     
     -- https://love2d.org/wiki/love.keyboard.isDown
->>>>>>> Stashed changes
     if love.keyboard.isDown("left") then 
         GameState.center_x = GameState.center_x - move_speed
         GameState.needs_regenerate = true

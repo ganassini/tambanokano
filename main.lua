@@ -37,6 +37,11 @@ local GameState = {
     needs_regenerate = true,
 }
 
+--Detect case Study
+local caseStudy = (arg[#arg] == "--case-study")
+local caseTimer = 0
+local screenshotTaken = false
+
 function love.load()
     love.window.setTitle("Tambanokano")
     love.graphics.setBackgroundColor(0.05, 0.05, 0.15)
@@ -81,7 +86,44 @@ function love.update(dt)
     
     local move_speed = 1.5 / GameState.zoom * dt
     local zoom_speed = 2.0 * dt
-    
+
+    if caseStudy then
+      caseTimer = caseTimer + dt
+      if caseTimer <= 0.63 then
+        GameState.center_x = GameState.center_x - move_speed
+        GameState.needs_regenerate = true
+      elseif caseTimer <= 0.73 then
+        GameState.center_y = GameState.center_y + move_speed
+        GameState.needs_regenerate = true
+      elseif caseTimer <= 3 then
+        GameState.zoom = GameState.zoom * (1.0 + zoom_speed)
+        GameState.needs_regenerate = true
+      elseif caseTimer <= 4 then
+        GameState.center_y = GameState.center_y + move_speed
+        GameState.needs_regenerate = true
+      elseif caseTimer <= 5.5 then
+        GameState.center_x = GameState.center_x + move_speed
+        GameState.needs_regenerate = true
+      elseif caseTimer <= 6 then
+        GameState.center_y = GameState.center_y - move_speed
+        GameState.needs_regenerate = true
+      elseif caseTimer <= 7.5 then
+        GameState.zoom = GameState.zoom * (1.0 + zoom_speed)
+        GameState.needs_regenerate = true 
+      elseif caseTimer > 7.5 and not screenshotTaken then
+        local filename = os.date("fractal-case-%Y%m%d-%H%M%S.png")
+        love.graphics.captureScreenshot(function(filename)
+        print("Case study screenshot saved! Closing application in 5 seconds")
+        end)
+        screenshotTaken = true
+      elseif caseTimer >=13 then
+        love.event.quit()
+      end
+      if GameState.needs_regenerate then
+        generateFractal()
+      end
+      return
+    end
     if love.keyboard.isDown("left") then 
         GameState.center_x = GameState.center_x - move_speed
         GameState.needs_regenerate = true

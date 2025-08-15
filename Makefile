@@ -18,6 +18,10 @@ run: build
 	@echo "Launching LÖVE2D application..."
 	love .
 
+case-study: build
+	@echo "Running case study..."
+	love . --case-study
+
 clean:
 	@cargo clean
 
